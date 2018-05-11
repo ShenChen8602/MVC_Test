@@ -9,4 +9,14 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <display-name>InitServlet</display-name>
+    <servlet-name>InitServlet</servlet-name>
+    <servlet-class>com.imooc.servlet.InitServlet</servlet-class>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>InitServlet</servlet-name>
+    <url-pattern>/InitServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -1,0 +1,24 @@
+package com.imooc.servlet;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+
+import com.imooc.domain.User;
+
+import java.util.*;
+/**
+ * Servlet implementation class InitServlet
+ */
+@WebServlet("/InitServlet")
+public class InitServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	public void init() throws ServletException {
+		//create list to store user info
+		List<User> list = new ArrayList<>();
+		
+		//store the list in ServletContext domain
+		this.getServletContext().setAttribute("list", list);
+	}
+
+}

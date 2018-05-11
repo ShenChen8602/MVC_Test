@@ -14,14 +14,15 @@
                 <a href="./login.jsp">登录</a> <a href="./regist.jsp">注册</a>
             </h1>
         </div>
-        <form action="/reg_login/RegistServlet" method="post">
+        
+        <form action="/reg_login/RegistServlet" method="post" enctype="multipart/form-data">
             <table>
                 <tr>
-                    <td class="td1">用户名</td>
+                    <td class="td1">ID</td>
                     <td><input type="text" class="input1" name="username"></td>
                 </tr>
                 <tr>
-                    <td class="td1">密码</td>
+                    <td class="td1">password</td>
                     <td><input type="password" class="input1" name="password"></td>
                 </tr>
                 <tr>
@@ -29,10 +30,10 @@
                     <td><input type="text" class="input1" name="nickname"></td>
                 </tr>
                 <tr>
-                    <td class="td1">性别</td>
+                    <td class="td1">sex</td>
                     <td>
-                        <input type="radio" name="sex" value="male">男
-                        <input type="radio" name="sex" value="female">女
+                        <input type="radio" name="sex" value="male"> male
+                        <input type="radio" name="sex" value="female"> female
                     </td>
                 </tr>
                 <tr>
@@ -40,18 +41,18 @@
                     <td><input type="file" id="photo" name="upload"></td>
                 </tr>
                 <tr>
-                    <td class="td1">兴趣爱好</td>
+                    <td class="td1">Hobbies</td>
                     <td><label> 
                         <input type="checkbox" name="hobby" value="篮球">篮球
                         <input type="checkbox" name="hobby" value="足球">足球
-                        <input type="checkbox" name="hobby" value="排球">排球 
-                        <input type="checkbox" name="hobby" value="羽毛球">羽毛球
+                        <input type="checkbox" name="hobby" value="排球">排球
+                        <input type="checkbox" name="hobby" value="游泳">游泳
                     </label></td>
                 </tr>
                 <tr>
                     <td colspan="2">
                         <div class="btn-red">
-                            <input type="submit" value="注册" id="reg-btn">
+                            <input type="submit" value="regist" id="reg-btn">
                         </div>
                     </td>
                 </tr>

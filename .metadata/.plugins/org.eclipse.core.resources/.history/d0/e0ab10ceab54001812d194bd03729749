@@ -1,0 +1,62 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>regist</title>
+<link rel="stylesheet" href="./css/reg.css">
+</head>
+<body>
+    <div class="reg">
+        <div class="header">
+            <h1>
+                <a href="./login.jsp">login</a> <a href="./regist.jsp">regist</a>
+            </h1>
+        </div>
+        <form action="/reg_login/RegistServlet" method="post">
+            <table>
+                <tr>
+                    <td class="td1">Account ID</td>
+                    <td><input type="text" class="input1" name="username"></td>
+                </tr>
+                <tr>
+                    <td class="td1">password</td>
+                    <td><input type="password" class="input1" name="password"></td>
+                </tr>
+                <tr>
+                    <td class="td1">nick name</td>
+                    <td><input type="text" class="input1" name="nickname"></td>
+                </tr>
+                <tr>
+                    <td class="td1">sex</td>
+                    <td>
+                        <input type="radio" name="sex" value="male">male
+                        <input type="radio" name="sex" value="female">female
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td1">Upload head sculpture</td>
+                    <td><input type="file" id="photo" name="upload"></td>
+                </tr>
+                <tr>
+                    <td class="td1">Hobbies</td>
+                    <td><label> 
+                        <input type="checkbox" name="hobby" value="篮球">basketball
+                        <input type="checkbox" name="hobby" value="足球">football
+                        <input type="checkbox" name="hobby" value="排球">PC GAME
+                        <input type="checkbox" name="hobby" value="羽毛球">Swimming
+                    </label></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="btn-red">
+                            <input type="submit" value="regist" id="reg-btn">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>
