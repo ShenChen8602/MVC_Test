@@ -1,6 +1,10 @@
 package com.imooc.servlet;
 import java.util.*;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +15,10 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
+
+import com.imooc.domain.User;
+import com.imooc.utils.UploadUtils;
 
 /**
  * Servlet implementation class RegistServlet
@@ -24,6 +32,8 @@ public class RegistServlet extends HttpServlet {
 		//数据的接收
 		//文件上传的基本操作
 		try {
+			//定义一个map存数据
+			Map<String, String> map = new HashMap<>();
 			//1.创建一个磁盘文件项工厂对象
 			DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
 			//2.创建一个核心解析类
@@ -33,6 +43,7 @@ public class RegistServlet extends HttpServlet {
 			//定义一个list集合，保存hobby
 			List<String> hobbyList = new ArrayList<>();
 			//4.遍历集合，获得每个fileitem，判断是表单还是文件上传项
+			String url = null;
 			for(FileItem fileItem : list){
 				if(fileItem.isFormField()){
 					String name = fileItem.getFieldName();
@@ -44,12 +55,66 @@ public class RegistServlet extends HttpServlet {
 						hobbyList.add(hobbyValue);
 						hobbyValue = hobbyList.toString().substring(1, hobbyList.toString().length() - 1);
 						System.out.println(name + "     " +hobbyValue);
+						map.put(name, hobbyValue);
+					} else{
+						map.put(name, value);
 					}
 				}else{
 					//文件上传项
-					
+					//文件上传功能
+					//获得文件上传的名称
+					String fileName = fileItem.getName();
+					if(fileName != null && !"".equals(fileName)){
+						//通过工具类获得唯一文件名
+						String uuidFileName = UploadUtils.getUUIDFileName(fileName);
+						//获得文件上传的数据
+						InputStream is = fileItem.getInputStream();
+						//获得文件上传的路径
+						String path = this.getServletContext().getRealPath("/upload");
+						//将输入流对接到输出流
+						url = path + "\\" + uuidFileName;
+						OutputStream os = new FileOutputStream(url);
+						int len = 0;
+						byte[] b = new byte[1024];
+						while((len = is.read(b)) != -1){
+							os.write(b, 0, len);
+		
+						}
+						is.close();
+						os.close();
+					}
 				}
 			}
+			System.out.println(map);
+			//将注册用户到信息放到list当中；
+			List<User> userList = (List<User>)this.getServletContext().getAttribute("list");
+			//校验用户名
+			for(User u : userList){
+				if(u.getUsername().equals(map.get("username"))){
+					request.setAttribute("msg", "用户名已经存在！");
+					request.getRequestDispatcher("/regist.jsp").forward(request, response);
+					return;
+				}
+			}
+			//封装数据到user当中
+			User user = new User();
+			user.setUsername(map.get("username"));
+			user.setPassword(map.get("password"));
+			user.setNickname(map.get("nickname"));
+			user.setSex(map.get("sex"));
+			user.setHobby(map.get("hobby"));
+			user.setPath(url);
+			
+			
+			userList.add(user);
+			for(User u : userList){
+				System.out.println(u);
+			}
+			this.getServletContext().setAttribute("list", userList);
+			//注册成功，跳转到登录界面
+			request.getSession().setAttribute("username", user.getUsername());
+			response.sendRedirect(request.getContextPath() + "/login.jsp");
+	
 		} catch (FileUploadException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

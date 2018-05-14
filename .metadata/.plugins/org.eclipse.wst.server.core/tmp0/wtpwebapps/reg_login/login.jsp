@@ -15,11 +15,17 @@
             </h1>
 
         </div>
+        <%	
+        	String username = "";
+        	if(session.getAttribute("username") != null){
+        		username = (String)session.getAttribute("username");
+        	}
+        %>
         <form action="" method="post">
             <table>
                 <tr>
                     <td class="td1">用户名</td>
-                    <td><input type="text" class="input1" name="username"></td>
+                    <td><input type="text" class="input1" name="username" value="<%=username %>"></td>
                 </tr>
                 <tr>
                 <td class="td1">密码</td>
